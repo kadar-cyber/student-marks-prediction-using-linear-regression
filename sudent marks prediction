@@ -1,0 +1,49 @@
+# Student Marks Prediction using Linear Regression
+
+# Step 1: Import required libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+# Step 2: Load the dataset
+data = pd.read_csv("student_marks.csv")
+print(data)
+
+# Step 3: Visualize the data
+plt.scatter(data['Hours'], data['Marks'])
+plt.xlabel("Hours Studied")
+plt.ylabel("Marks Obtained")
+plt.title("Hours vs Marks")
+plt.show()
+
+# Step 4: Split data into input and output
+X = data[['Hours']]
+y = data['Marks']
+
+# Step 5: Split into training and testing data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=0
+)
+
+# Step 6: Train the Linear Regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Step 7: Make predictions
+y_pred = model.predict(X_test)
+print("Predicted Marks:", y_pred)
+
+# Step 8: Plot regression line
+plt.scatter(X, y)
+plt.plot(X, model.predict(X), color='red')
+plt.xlabel("Hours Studied")
+plt.ylabel("Marks")
+plt.title("Regression Line")
+plt.show()
+
+# Step 9: Predict marks for custom input
+hours = [[7]]
+predicted_marks = model.predict(hours)
+print("Marks for 7 hours of study:", predicted_marks[0])
